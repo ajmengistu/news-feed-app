@@ -1,6 +1,9 @@
 language: python
 python:
     - "3.8"
+
 install:
     - pip install -r requirements.txt
-    - python news_feed_app/manage.py test
+
+script:
+    - (cd news_feed_app && python manage.py test)
