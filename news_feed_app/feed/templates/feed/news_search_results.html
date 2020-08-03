@@ -1,0 +1,47 @@
+{% extends "feed/base.html" %} 
+
+{% block content %} 
+
+
+<div class="container">
+    <h2>Search Results</h2>
+
+    <div class="row">
+        <div class="col-md-8">
+      
+             {% for article in search_results %}
+      
+            <article class="media content-section">
+              {% if article.urlToImage %} <img class="thumbnail mr-3" src="{{ article.urlToImage }}" height="70">   {% endif %}
+              <div class="media-body">
+                <p>
+                  <a class="article-title" href="{{ article.url }}" target="_blank"
+                    >{{ article.title }}</a
+                  >
+                </p>
+                <div style="font-size: 0.8rem;">
+                  {% if article.description %}<a class="mr-2" href="">{{ article.author }}</a> | {% else %} {% endif %}
+                  <small class="text-muted">{{ article.publishedAt }}</small> | {{article.source.name}}
+                </div>
+                <hr />
+                {% if article.description %}
+                <p class="article-content">{{ article.description }}</p>
+                {% endif %} 
+              </div>
+            </article>
+      
+            {% endfor %} 
+      
+          </div>
+
+        <div class="col-md-4">
+
+        </div>
+    </div>
+
+
+
+
+</div>
+
+{% endblock content %} 

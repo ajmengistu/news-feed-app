@@ -31,6 +31,7 @@ def update_database(form):
     for category in categories:
         obj = categoriesObj.filter(name=category).update(selected=categories[category])
 
+# Home page view 
 def home(request):
     form = CategoryForm()
     initialize_category_form(form)
@@ -45,3 +46,15 @@ def home(request):
 
     context = { 'form':form, 'article_categories':article_categories }
     return render(request, 'feed/home.html', context)
+
+def search_news(request):
+    search_results = []
+    if request.method == 'GET':
+        search_query = request.GET.get('q') 
+        response = api.get_everything(q=search_query)
+        search_results = response['articles']
+    else:
+        return redirect('/')
+
+    context = { 'search_results': search_results }
+    return render(request, 'feed/news_search_results.html', context)

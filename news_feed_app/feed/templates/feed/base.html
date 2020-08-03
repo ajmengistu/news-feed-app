@@ -24,15 +24,17 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
             <div class="app-logo">
+            <a href="{% url 'home' %}" style="text-decoration: none; color: white">
               News Feed App
+            </a>
             </div>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
 
-  <form class="form-inline" method="GET" action="/search`">
+  <form class="form-inline" method="GET" action="{% url 'news_search_results' %}">
   {% comment %} {% csrf_token %} {% endcomment %}
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search news articles..." aria-label="Search">
     <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
   </form>
             </div>
