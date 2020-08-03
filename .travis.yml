@@ -1,9 +1,15 @@
 language: python
 python:
     - "3.8"
-
-install:
+sudo: required
+services:
+    - docker
+before_script:
     - pip install -r requirements.txt
-
 script:
     - (cd news_feed_app && python manage.py test)
+    - docker build -t django-news-feed-app .
+after_success:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - docker tag django-news-feed-app $DOCKER_USER/django-news-feed-app:latest
+    - docker push $DOCKER_USER/django-news-feed-app:latest
