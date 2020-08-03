@@ -1,0 +1,54 @@
+{% extends "feed/base.html" %} {% block content %} {% comment %} News Feed {% endcomment %}
+<main role="main" class="container">
+  <div class="row">
+    {% comment %} Articles {% endcomment %}
+
+    <div class="col-md-8">
+      {% for article_category_title, article_category in article_categories.items %}
+
+       {% if article_category|length > 0 %} <span class=""> {{ article_category_title|upper }} </span>
+
+       {% for article in article_category %}
+
+      <article class="media content-section">
+        {% if article.urlToImage %} <img class="thumbnail mr-3" src="{{ article.urlToImage }}" height="70">   {% endif %}
+        <div class="media-body">
+          <p>
+            <a class="article-title" href="{{ article.url }}" target="_blank"
+              >{{ article.title }}</a
+            >
+          </p>
+          <div style="font-size: 0.8rem;">
+            {% if article.description %}<a class="mr-2" href="">{{ article.author }}</a> | {% else %} {% endif %}
+            <small class="text-muted">{{ article.publishedAt }}</small> | {{article.source.name}}
+          </div>
+          <hr />
+          {% if article.description %}
+          <p class="article-content">{{ article.description }}</p>
+          {% endif %} 
+        </div>
+      </article>
+
+      {% endfor %} 
+
+      {% endif %} 
+
+      {% endfor %}
+    </div>
+
+    {% comment %} Feed Filter Form {% endcomment %}
+    <div class="col-md-4">
+      <div class="content-section">
+        <h3>Filter News Feed</h3>
+        <p class="text-muted">What are you interested in?</p>
+        <form action="/" method="POST" style="margin-left: 1.4rem;">
+          {% csrf_token %} {{ form }}
+          <br />
+          <button type="submit" class="btn btn-info mt-2">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock content %}
